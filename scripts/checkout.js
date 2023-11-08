@@ -1,6 +1,7 @@
 import {cart, removeFromCart} from "../data/cart.js";
 import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+import { cartQuantity } from "./utils/updatedCartQuantity.js"
 
 
 let cartSummeryHTML = "";
@@ -93,8 +94,10 @@ cart.forEach((cartItem => {
 </div>`;
 }));
 
-document.querySelector(".js-order-summery").innerHTML = cartSummeryHTML;
+document.querySelector(".js-checkout-items").innerHTML = `${cartQuantity()} items`;
 
+
+document.querySelector(".js-order-summery").innerHTML = cartSummeryHTML;
 
 document.querySelectorAll(".js-delete-link")
     .forEach((link) => {
@@ -104,8 +107,11 @@ document.querySelectorAll(".js-delete-link")
         removeFromCart(productId);   
 
         const container = document
+
         .querySelector(`.js-cart-item-container-${productId}`);            
         container.remove();
+
+        document.querySelector(".js-checkout-items").innerHTML = `${cartQuantity()} items`;
     })
 });
 

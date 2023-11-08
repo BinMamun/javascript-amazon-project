@@ -1,6 +1,7 @@
 import {cart, addToCart} from "../data/cart.js";
 import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+import { cartQuantity } from "./utils/updatedCartQuantity.js"
 
 
 let productsHTML = "";
@@ -60,18 +61,8 @@ products.forEach((product)=>{
 
 document.querySelector(".js-products-grid")
     .innerHTML = productsHTML;
-    
-  updateCartQuantity(); // Counts the cart quantity.
-
-function updateCartQuantity(){  
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-  });
-  document.querySelector(".js-cart-quantity")
-    .innerText = cartQuantity;
-}
-
+document.querySelector(".js-cart-quantity")
+    .innerText = cartQuantity(); // Counts the cart quantity.
 
 function addedNotification(productId, timeOutId){
   const addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
@@ -94,8 +85,9 @@ document.querySelectorAll(".js-add-to-cart-button")
 
         addToCart(productId); //Adds item to the cart.
           
-        updateCartQuantity(); // Counts the cart quantity.
+        document.querySelector(".js-cart-quantity")
+        .innerText = cartQuantity(); // Counts the cart quantity.
 
         addedNotification(productId, timeOutId); // Displays added notification & then hides after 2 seconds. 
     })
-})
+});
