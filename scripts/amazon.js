@@ -60,7 +60,8 @@ products.forEach((product)=>{
 
 document.querySelector(".js-products-grid")
     .innerHTML = productsHTML;
-
+    
+  updateCartQuantity(); // Counts the cart quantity.
 
 function updateCartQuantity(){  
   let cartQuantity = 0;
