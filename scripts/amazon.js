@@ -1,7 +1,6 @@
-import {cart, addToCart} from "../data/cart.js";
+import { addToCart, calculateCartQuantity} from "../data/cart.js";
 import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
-import { cartQuantity } from "./utils/updatedCartQuantity.js"
 
 
 let productsHTML = "";
@@ -61,8 +60,18 @@ products.forEach((product)=>{
 
 document.querySelector(".js-products-grid")
     .innerHTML = productsHTML;
-document.querySelector(".js-cart-quantity")
-    .innerText = cartQuantity(); // Counts the cart quantity.
+ 
+function updateCartQuantity(){
+  if(calculateCartQuantity() > 0){
+    document.querySelector(".js-cart-quantity")
+    .innerHTML = calculateCartQuantity();
+  }else if(calculateCartQuantity() === 0){
+    document.querySelector(".js-cart-quantity")
+    .innerHTML = ""
+  }
+} // updates the cart quantity HTML.
+
+updateCartQuantity(); //updates cart Quantity after loading the page.
 
 function addedNotification(productId, timeOutId){
   const addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
@@ -85,8 +94,7 @@ document.querySelectorAll(".js-add-to-cart-button")
 
         addToCart(productId); //Adds item to the cart.
           
-        document.querySelector(".js-cart-quantity")
-        .innerText = cartQuantity(); // Counts the cart quantity.
+        updateCartQuantity(); //updates cart Quantity after add to cart item.
 
         addedNotification(productId, timeOutId); // Displays added notification & then hides after 2 seconds. 
     })
