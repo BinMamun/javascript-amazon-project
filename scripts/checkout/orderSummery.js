@@ -78,9 +78,11 @@ export function renderOrderSummery() {
 </div>`;
     }));
 
-    document.querySelector(".js-order-summery").innerHTML = cartSummeryHTML;
+    document.querySelector(".js-order-summery")
+        .innerHTML = cartSummeryHTML;
 
-    document.querySelector(".js-checkout-items").innerHTML = `${calculateCartQuantity()} items`;
+    document.querySelector(".js-checkout-items")
+        .innerHTML = `${calculateCartQuantity()} items`;
 
     document.querySelectorAll(".js-delete-link")
         .forEach((link) => {
@@ -116,7 +118,7 @@ export function renderOrderSummery() {
                 const productId = link.dataset.productId;
                 const container = document
                     .querySelector(`
-                .js-cart-item-container-${productId}`);
+            .js-cart-item-container-${productId}`);
                 container.classList.remove("is-editing-quantity");
 
                 const inputValue = document.querySelector(`.js-quantity-input-${productId}`);
@@ -191,23 +193,23 @@ export function renderOrderSummery() {
             const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
             html += `
-          <div class="delivery-option js-delivery-option"
-            data-product-id="${matchingProduct.id}"
-            data-delivery-option-id="${deliveryOption.id}">
-              <input type="radio"
-              ${isChecked ? "checked" : ""}
-              class="delivery-option-input"
-              name="delivery-option-${matchingProduct.id}">
-              <div>
-              <div class="delivery-option-date">
-                  ${dateString}
-              </div>
-              <div class="delivery-option-price">
-                  ${priceString} Shipping
-              </div>
-              </div>
-          </div>
-          `
+        <div class="delivery-option js-delivery-option"
+        data-product-id="${matchingProduct.id}"
+        data-delivery-option-id="${deliveryOption.id}">
+            <input type="radio"
+            ${isChecked ? "checked" : ""}
+            class="delivery-option-input"
+            name="delivery-option-${matchingProduct.id}">
+            <div>
+            <div class="delivery-option-date">
+                ${dateString}
+            </div>
+            <div class="delivery-option-price">
+                ${priceString} Shipping
+            </div>
+            </div>
+        </div>
+        `
         })
         return html;
     }
