@@ -130,7 +130,6 @@ export function renderOrderSummery() {
 
                     validationMessage.innerHTML = "";
                 } else {
-
                     validationMessage.innerHTML = "Value must be between 1 and 10";
                 }
 
@@ -155,15 +154,26 @@ export function renderOrderSummery() {
 
                 const inputValue = document
                     .querySelector(`.js-quantity-input-${productId}`);
+
                 const newQuantity = Number(inputValue.value);
+
+                const validationMessage = document
+                    .querySelector(`.js-validation-message-${productId}`);
 
                 if (event.key === "Enter") {
                     container.classList.remove("is-editing-quantity");
-                    updateQuantity(productId, newQuantity);
-                    document.querySelector(".js-checkout-items")
-                        .innerHTML = `${calculateCartQuantity()} items`;
+                    if (newQuantity > 0 && newQuantity < 11) {
+                        updateQuantity(productId, newQuantity); // updates the cart items quantity.
+                        document.querySelector(".js-checkout-items")
+                            .innerHTML = `${calculateCartQuantity()} items`; //calculates and displays the cart item quantity. 
+                        updateLabel(productId, newQuantity);
+                        //displays the updated quantity in the item-cart-container label.
 
-                    updateLabel(productId, newQuantity);
+                        validationMessage.innerHTML = "";
+                    } else {
+                        console.log(validationMessage.innerHTML);
+                        validationMessage.innerHTML = "Value must be between 1 and 10";
+                    }
                 }
             })
         });
@@ -200,7 +210,6 @@ export function renderOrderSummery() {
         })
         return html;
     }
-
 
     document.querySelectorAll(".js-delivery-option")
         .forEach((element) => {
